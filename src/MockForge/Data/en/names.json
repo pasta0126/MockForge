@@ -1,0 +1,34 @@
+{
+  "firstNames": [
+    "James", "Mary", "John", "Patricia", "Robert", "Jennifer", "Michael", "Linda",
+    "David", "Elizabeth", "William", "Barbara", "Richard", "Susan", "Joseph", "Jessica",
+    "Thomas", "Sarah", "Christopher", "Karen", "Charles", "Nancy", "Daniel", "Lisa",
+    "Matthew", "Betty", "Anthony", "Helen", "Mark", "Sandra", "Donald", "Donna",
+    "Steven", "Carol", "Paul", "Ruth", "Andrew", "Sharon", "Joshua", "Michelle",
+    "Kenneth", "Laura", "Kevin", "Sarah", "Brian", "Kimberly", "George", "Deborah",
+    "Edward", "Dorothy", "Ronald", "Lisa", "Timothy", "Nancy", "Jason", "Karen",
+    "Jeffrey", "Betty", "Ryan", "Helen", "Jacob", "Sandra", "Gary", "Donna"
+  ],
+  "lastNames": [
+    "Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis",
+    "Rodriguez", "Martinez", "Hernandez", "Lopez", "Gonzalez", "Wilson", "Anderson", "Thomas",
+    "Taylor", "Moore", "Jackson", "Martin", "Lee", "Perez", "Thompson", "White",
+    "Harris", "Sanchez", "Clark", "Ramirez", "Lewis", "Robinson", "Walker", "Young",
+    "Allen", "King", "Wright", "Scott", "Torres", "Nguyen", "Hill", "Flores",
+    "Green", "Adams", "Nelson", "Baker", "Hall", "Rivera", "Campbell", "Mitchell",
+    "Carter", "Roberts", "Gomez", "Phillips", "Evans", "Turner", "Diaz", "Parker",
+    "Cruz", "Edwards", "Collins", "Reyes", "Stewart", "Morris", "Morales", "Murphy"
+  ],
+  "middleNames": [
+    "Alexander", "Anthony", "Christopher", "Daniel", "David", "Edward", "James", "John",
+    "Joseph", "Matthew", "Michael", "Nicholas", "Robert", "Thomas", "William", "Andrew",
+    "Ann", "Anne", "Elizabeth", "Grace", "Jane", "Lynn", "Marie", "Michelle",
+    "Nicole", "Patricia", "Rebecca", "Rose", "Sarah", "Sue", "Catherine", "Christine"
+  ],
+  "prefixes": [
+    "Mr.", "Mrs.", "Miss", "Ms.", "Dr.", "Prof.", "Rev."
+  ],
+  "suffixes": [
+    "Jr.", "Sr.", "II", "III", "IV", "PhD", "MD", "Esq."
+  ]
+}

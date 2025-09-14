@@ -1,0 +1,34 @@
+{
+  "firstNames": [
+    "José", "María", "Antonio", "Carmen", "Manuel", "Ana", "Francisco", "Isabel",
+    "David", "Pilar", "Jesús", "Dolores", "Javier", "Teresa", "Carlos", "Rosa",
+    "Miguel", "Francisca", "Alejandro", "Antonia", "Rafael", "Mercedes", "Fernando", "Josefa",
+    "Daniel", "Elena", "Jorge", "Concepción", "Ricardo", "Manuela", "Sergio", "Esperanza",
+    "Andrés", "Ángeles", "Luis", "Cristina", "Álvaro", "Encarnación", "Rubén", "Montserrat",
+    "Pablo", "Amparo", "Juan", "Soledad", "Pedro", "Victoria", "Ramón", "Remedios",
+    "Enrique", "Milagros", "Raúl", "Purificación", "Iván", "Nuria", "Diego", "Rosario",
+    "Óscar", "Asunción", "Marcos", "Inmaculada", "Víctor", "Aurora", "Gonzalo", "Susana"
+  ],
+  "lastNames": [
+    "García", "González", "Rodríguez", "Fernández", "López", "Martínez", "Sánchez", "Pérez",
+    "Gómez", "Martín", "Jiménez", "Ruiz", "Hernández", "Díaz", "Moreno", "Muñoz",
+    "Álvarez", "Romero", "Alonso", "Gutiérrez", "Navarro", "Torres", "Domínguez", "Vázquez",
+    "Ramos", "Gil", "Ramírez", "Serrano", "Blanco", "Suárez", "Molina", "Morales",
+    "Ortega", "Delgado", "Castro", "Ortiz", "Rubio", "Marín", "Sanz", "Iglesias",
+    "Medina", "Garrido", "Cortés", "Castillo", "Santos", "Lozano", "Guerrero", "Cano",
+    "Prieto", "Méndez", "Cruz", "Gallego", "Vega", "León", "Herrera", "Peña",
+    "Flores", "Cabrera", "Vargas", "Reyes", "Aguilar", "Pascual", "Herrero", "Montero"
+  ],
+  "middleNames": [
+    "Antonio", "José", "Manuel", "Francisco", "David", "Juan", "Javier", "Daniel",
+    "Carlos", "Miguel", "Rafael", "Pedro", "Ángel", "Alejandro", "Fernando", "Sergio",
+    "María", "Carmen", "Ana", "Isabel", "Pilar", "Teresa", "Rosa", "Francisca",
+    "Antonia", "Mercedes", "Elena", "Concepción", "Manuela", "Esperanza", "Ángeles", "Cristina"
+  ],
+  "prefixes": [
+    "Sr.", "Sra.", "Srta.", "Dr.", "Dra.", "Prof.", "Rev.", "Don", "Doña"
+  ],
+  "suffixes": [
+    "Jr.", "Sr.", "II", "III", "IV", "PhD", "MD", "Hijo", "Nieto"
+  ]
+}

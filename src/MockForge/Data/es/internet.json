@@ -1,0 +1,19 @@
+{
+  "domains": [
+    "ejemplo.com", "prueba.org", "demo.net", "muestra.co", "mock.io", "falso.dev",
+    "placeholder.es", "dummy.org", "testing.net", "sandbox.io", "prototipo.co",
+    "staging.dev", "desarrollo.org", "localhost.com", "correo.net"
+  ],
+  "emailProviders": [
+    "gmail.com", "yahoo.es", "outlook.es", "hotmail.es", "terra.es", "wanadoo.es",
+    "live.com", "msn.com", "yandex.com", "mail.com", "zoho.com", "protonmail.com",
+    "fastmail.com", "tutanota.com", "gmx.es", "yahoo.com", "telefonica.net"
+  ],
+  "usernameFormats": [
+    "{{word}}{{number}}", "{{word}}.{{word}}", "{{word}}_{{number}}", "{{word}}{{year}}",
+    "{{word}}.{{number}}", "{{word}}-{{word}}", "usuario{{number}}", "{{word}}{{word}}{{number}}"
+  ],
+  "protocols": [
+    "http", "https", "ftp", "ftps"
+  ]
+}

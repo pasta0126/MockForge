@@ -1,0 +1,27 @@
+{
+  "words": [
+    "lorem", "ipsum", "dolor", "sit", "amet", "consectetur", "adipiscing", "elit",
+    "sed", "do", "eiusmod", "tempor", "incididunt", "ut", "labore", "et", "dolore",
+    "magna", "aliqua", "enim", "ad", "minim", "veniam", "quis", "nostrud",
+    "exercitation", "ullamco", "laboris", "nisi", "aliquip", "ex", "ea", "commodo",
+    "consequat", "duis", "aute", "irure", "in", "reprehenderit", "voluptate",
+    "velit", "esse", "cillum", "fugiat", "nulla", "pariatur", "excepteur", "sint",
+    "occaecat", "cupidatat", "non", "proident", "sunt", "culpa", "qui", "officia",
+    "deserunt", "mollit", "anim", "id", "est", "laborum", "el", "la", "de", "que",
+    "y", "a", "en", "un", "es", "se", "no", "te", "lo", "le", "da", "su", "por",
+    "son", "con", "para", "una", "tiene", "más", "pero", "sus", "me", "todo",
+    "como", "muy", "aquí", "día", "gran", "otro", "vida", "tiempo", "bien", "casa"
+  ],
+  "sentences": [
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
+    "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.",
+    "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.",
+    "En un lugar de la Mancha, de cuyo nombre no quiero acordarme.",
+    "El tiempo es oro, pero el oro no es tiempo.",
+    "La vida es bella cuando sabes apreciar las pequeñas cosas.",
+    "No hay mal que por bien no venga.",
+    "El saber no ocupa lugar."
+  ]
+}

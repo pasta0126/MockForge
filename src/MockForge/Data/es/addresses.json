@@ -1,0 +1,39 @@
+{
+  "streets": [
+    "Calle Mayor", "Avenida de la Constitución", "Plaza España", "Calle Real", "Paseo de la Castellana",
+    "Gran Vía", "Calle de Alcalá", "Avenida de América", "Plaza del Sol", "Calle de Serrano",
+    "Paseo del Prado", "Calle de Goya", "Avenida de Andalucía", "Plaza de Cataluña", "Calle del Carmen",
+    "Paseo Marítimo", "Avenida del Mar", "Calle de la Paz", "Plaza de Armas", "Calle de San Juan",
+    "Avenida Central", "Plaza Mayor", "Calle de la Cruz", "Paseo de los Álamos", "Avenida de Europa",
+    "Calle de Valencia", "Plaza de la Libertad", "Paseo de la Victoria", "Calle de Barcelona",
+    "Avenida de Madrid", "Plaza de San Pedro", "Calle de Sevilla", "Paseo del Río", "Avenida del Norte",
+    "Calle de Toledo", "Plaza de la República", "Paseo de Granada", "Avenida de Castilla", "Calle Nueva"
+  ],
+  "cities": [
+    "Madrid", "Barcelona", "Valencia", "Sevilla", "Zaragoza", "Málaga", "Murcia", "Palma",
+    "Las Palmas", "Bilbao", "Alicante", "Córdoba", "Valladolid", "Vigo", "Gijón", "Hospitalet",
+    "Coruña", "Granada", "Vitoria", "Elche", "Oviedo", "Badalona", "Cartagena", "Terrassa",
+    "Jerez", "Sabadell", "Santa Cruz", "Pamplona", "Almería", "Fuenlabrada", "Leganés", "Donostia",
+    "Burgos", "Santander", "Castellón", "Getafe", "Albacete", "Alcorcón", "Logroño", "Badajoz",
+    "Salamanca", "Huelva", "Marbella", "Lleida", "Tarragona", "León", "Cadiz", "Dos Hermanas"
+  ],
+  "states": [
+    "Andalucía", "Cataluña", "Madrid", "Valencia", "Galicia", "Castilla y León", "País Vasco",
+    "Canarias", "Castilla-La Mancha", "Murcia", "Aragón", "Extremadura", "Baleares", "Asturias",
+    "Navarra", "Cantabria", "La Rioja", "Ceuta", "Melilla"
+  ],
+  "countries": [
+    "España", "Francia", "Italia", "Portugal", "Alemania", "Reino Unido", "Países Bajos", "Bélgica",
+    "Suiza", "Austria", "Polonia", "República Checa", "Grecia", "Turquía", "Marruecos", "Argentina",
+    "México", "Colombia", "Perú", "Chile", "Venezuela", "Ecuador", "Uruguay", "Paraguay",
+    "Bolivia", "Brasil", "Estados Unidos", "Canadá", "Australia", "Japón", "China", "India"
+  ],
+  "postalCodeFormats": [
+    "#####"
+  ],
+  "buildingNumbers": [
+    "1", "2", "3", "4", "5", "10", "15", "20", "25", "30", "35", "40", "45", "50",
+    "55", "60", "65", "70", "75", "80", "85", "90", "95", "100", "125", "150", "175", "200",
+    "225", "250", "275", "300", "350", "400", "450", "500", "750", "1000", "1250", "1500"
+  ]
+}
