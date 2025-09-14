@@ -1,0 +1,5 @@
+{
+  "name.first": [ "Juan", "María", "Lucía", "Pablo" ],
+  "name.last": [ "García", "López", "Martínez", "Sánchez" ],
+  "address.city": [ "Madrid", "Barcelona", "Valencia", "Sevilla" ]
+}

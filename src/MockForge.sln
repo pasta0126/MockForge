@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockForge.Tests", "MockForg
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockForge.Benchmarks", "MockForge.Benchmarks\MockForge.Benchmarks.csproj", "{49ED2483-E1F8-4EBC-A229-B0A4CEC8A43A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockForge.Locales", "MockForge.Locales\MockForge.Locales.csproj", "{A376A94E-C927-4D67-98AC-FB2C9EF10089}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{49ED2483-E1F8-4EBC-A229-B0A4CEC8A43A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49ED2483-E1F8-4EBC-A229-B0A4CEC8A43A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49ED2483-E1F8-4EBC-A229-B0A4CEC8A43A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A376A94E-C927-4D67-98AC-FB2C9EF10089}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A376A94E-C927-4D67-98AC-FB2C9EF10089}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A376A94E-C927-4D67-98AC-FB2C9EF10089}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A376A94E-C927-4D67-98AC-FB2C9EF10089}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
