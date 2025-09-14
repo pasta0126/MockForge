@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MockForge.Core\MockForge.Core.csproj" />
+    <ProjectReference Include="..\MockForge.Locales\MockForge.Locales.csproj" />
     <ProjectReference Include="..\MockForge.Providers\MockForge.Providers.csproj" />
   </ItemGroup>
 

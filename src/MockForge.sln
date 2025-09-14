@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockForge", "MockForge\Mock
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockForge.Tests", "MockForge.Tests\MockForge.Tests.csproj", "{22F2FCE2-6362-4B58-87C0-C2DF26B9D45E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockForge.Benchmarks", "MockForge.Benchmarks\MockForge.Benchmarks.csproj", "{49ED2483-E1F8-4EBC-A229-B0A4CEC8A43A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockForge.Locales", "MockForge.Locales\MockForge.Locales.csproj", "{A376A94E-C927-4D67-98AC-FB2C9EF10089}"
 EndProject
 Global
@@ -37,10 +35,6 @@ Global
 		{22F2FCE2-6362-4B58-87C0-C2DF26B9D45E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22F2FCE2-6362-4B58-87C0-C2DF26B9D45E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22F2FCE2-6362-4B58-87C0-C2DF26B9D45E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{49ED2483-E1F8-4EBC-A229-B0A4CEC8A43A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{49ED2483-E1F8-4EBC-A229-B0A4CEC8A43A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{49ED2483-E1F8-4EBC-A229-B0A4CEC8A43A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{49ED2483-E1F8-4EBC-A229-B0A4CEC8A43A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A376A94E-C927-4D67-98AC-FB2C9EF10089}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A376A94E-C927-4D67-98AC-FB2C9EF10089}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A376A94E-C927-4D67-98AC-FB2C9EF10089}.Release|Any CPU.ActiveCfg = Release|Any CPU

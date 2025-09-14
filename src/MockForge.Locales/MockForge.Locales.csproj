@@ -1,19 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="en.json" />
-    <None Remove="es.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Locales\en.json" />
-    <EmbeddedResource Include="Locales\es.json" />
-  </ItemGroup>
-
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<AssemblyName>MockForge.Locales</AssemblyName>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Locales\en.json" LogicalName="MockForge.Locales.en.json" />
+		<EmbeddedResource Include="Locales\es.json" LogicalName="MockForge.Locales.es.json" />
+	</ItemGroup>
 </Project>
