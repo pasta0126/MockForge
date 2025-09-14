@@ -1,4 +1,5 @@
 ﻿using MockForge.Core.Abstractions;
+
 namespace MockForge.Core.Random;
 public sealed class ThreadSafeRandomizer(int? seed = null) : IRandomizer
 {

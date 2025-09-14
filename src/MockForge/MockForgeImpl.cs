@@ -3,7 +3,6 @@ using MockForge.Core;
 using MockForge.Core.Abstractions;
 using MockForge.Core.Locales;
 using MockForge.Core.Random;
-using MockForge.Core.Templates;
 
 namespace MockForge;
 
@@ -11,7 +10,6 @@ internal sealed class MockForgeImpl(MockForgeOptions opts) : IMockForge
 {
     private readonly string _locale = opts.Locale;
     private readonly IRandomizer _rnd = new ThreadSafeRandomizer(opts.Seed);
-    private readonly ITemplateEngine _tpl = new SimpleTemplateEngine();
     private readonly ILocaleStore _store = new EmbeddedLocaleStore(Assembly.Load("MockForge.Locales"));
     private readonly Dictionary<Type, IProvider> _cache = [];
 

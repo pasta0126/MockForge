@@ -6,6 +6,8 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Xunit;
 
+namespace MockForge.Tests;
+
 public class NameProviderTests
 {
     [Fact]

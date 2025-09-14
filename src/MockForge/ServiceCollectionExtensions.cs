@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using MockForge.Core;
 using MockForge.Core.Abstractions;
+
 namespace MockForge;
 public static class ServiceCollectionExtensions
 {

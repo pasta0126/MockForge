@@ -1,6 +1,8 @@
 ﻿using System.Text.RegularExpressions;
 using MockForge.Core.Abstractions;
+
 namespace MockForge.Core.Templates;
+
 public sealed class SimpleTemplateEngine : ITemplateEngine
 {
     static readonly Regex Rx = new(@"\{\{(\w+)\}\}", RegexOptions.Compiled);
