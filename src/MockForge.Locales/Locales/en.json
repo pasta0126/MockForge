@@ -1,5 +1,0 @@
-{
-  "name.first": [ "John", "Alice", "Mark", "Julia" ],
-  "name.last": [ "Smith", "Johnson", "Brown", "Taylor" ],
-  "address.city": [ "New York", "Chicago", "Austin", "Seattle" ]
-}

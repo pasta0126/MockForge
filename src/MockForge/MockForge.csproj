@@ -1,19 +1,35 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<IsPackable>true</IsPackable>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<IncludeReferencedProjects>true</IncludeReferencedProjects>
+		<PackageId>MockForge</PackageId>
+		<Version>0.0.1</Version>
+		<Authors>pasta0126</Authors>
+		<Company>MicroIsla</Company>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.9" />
-  </ItemGroup>
+		<Description>
+			MockForge is a .NET 8 library that makes it easy to generate random data. It includes Magic 8 Ball-style answers, numerical values, dates, cards, mathematical progressions, colors, and more.
+		</Description>
 
-  <ItemGroup>
-    <ProjectReference Include="..\MockForge.Core\MockForge.Core.csproj" />
-    <ProjectReference Include="..\MockForge.Locales\MockForge.Locales.csproj" />
-    <ProjectReference Include="..\MockForge.Providers\MockForge.Providers.csproj" />
-  </ItemGroup>
+		<PackageTags>random;data-generation;dummy-data;test-data;utilities;net8;MockForge</PackageTags>
+		<RepositoryUrl>https://github.com/pasta0126/MockForge</RepositoryUrl>
+
+		<PackageLicenseExpression>Unlicense</PackageLicenseExpression>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.9" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="README.md" Pack="true" PackagePath="" />
+	</ItemGroup>
 
 </Project>
