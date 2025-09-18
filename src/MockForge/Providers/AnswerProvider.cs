@@ -1,4 +1,5 @@
 ﻿using MockForge.Core.Abstractions;
+using MockForge.StaticData;
 
 namespace MockForge.Providers
 {
@@ -6,8 +7,10 @@ namespace MockForge.Providers
     {
         public string Name => "Answer";
 
-        public ValueTask<string> CityAsync() => ValueTask.FromResult(r.Pick(DataStore.Cities));
+        public string YesNo() => r.Pick(AnswerDataStore.YesNoAnswer);
 
+        public string Magic8Ball() => r.Pick(AnswerDataStore.Magic8BallAnswers);
 
+        public bool TrueFalse() => r.Pick(AnswerDataStore.TrueFalseAnswer) == "True";
     }
 }
