@@ -5,8 +5,6 @@ VisualStudioVersion = 17.14.36429.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockForge", "MockForge\MockForge.csproj", "{8A447CC1-FAD6-4739-84D0-77F3CCCE862E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockForge.Tests", "MockForge.Tests\MockForge.Tests.csproj", "{22F2FCE2-6362-4B58-87C0-C2DF26B9D45E}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
 	ProjectSection(SolutionItems) = preProject
 		..\Architecture.md = ..\Architecture.md
@@ -28,10 +26,6 @@ Global
 		{8A447CC1-FAD6-4739-84D0-77F3CCCE862E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A447CC1-FAD6-4739-84D0-77F3CCCE862E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A447CC1-FAD6-4739-84D0-77F3CCCE862E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{22F2FCE2-6362-4B58-87C0-C2DF26B9D45E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{22F2FCE2-6362-4B58-87C0-C2DF26B9D45E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{22F2FCE2-6362-4B58-87C0-C2DF26B9D45E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{22F2FCE2-6362-4B58-87C0-C2DF26B9D45E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B1B8199A-8B7F-4023-A8C3-40DB081AF564}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B1B8199A-8B7F-4023-A8C3-40DB081AF564}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1B8199A-8B7F-4023-A8C3-40DB081AF564}.Release|Any CPU.ActiveCfg = Release|Any CPU
