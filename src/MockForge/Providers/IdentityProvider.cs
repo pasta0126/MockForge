@@ -28,26 +28,26 @@ namespace MockForge.Providers
         public string Department() => r.Pick(IdentityDataStore.DepartmentData);
         public string Company() => r.Pick(IdentityDataStore.CompanyData);
 
-        public Person Person(bool withNobelTitle, bool withTitle, bool withMiddelName, int? age = null)
+        public Person Person(bool withNobelTitle, bool withTitle, bool withMiddelName, int? maxAge = null)
         {
             var gender = Gender();
 
             if (gender == "Male")
             {
-                return MalePerson(gender, withNobelTitle, withTitle, withMiddelName, age);
+                return MalePerson(gender, withNobelTitle, withTitle, withMiddelName, maxAge);
             }
 
             if (gender == "Female")
             {
-                return FemalePerson(gender, withNobelTitle, withTitle, withMiddelName, age);
+                return FemalePerson(gender, withNobelTitle, withTitle, withMiddelName, maxAge);
             }
 
-            return OtherGenderPerson(gender, withNobelTitle, withTitle, withMiddelName, age);
+            return OtherGenderPerson(gender, withNobelTitle, withTitle, withMiddelName, maxAge);
         }
 
-        public Person MalePerson(string gender, bool withNobelTitle, bool withTitle, bool withMiddelName, int? age = null)
+        public Person MalePerson(string gender, bool withNobelTitle, bool withTitle, bool withMiddelName, int? maxAge = null)
         {
-            var calculatedAge = age ?? numberProvider.RandomNumber<int>(18, 120);
+            var calculatedAge = maxAge ?? numberProvider.RandomNumber<int>(18, 120);
             var birthday = dateProvider.PastDate(calculatedAge);
             var title = withTitle ? MaleTitle() : string.Empty;
             var middleName = withMiddelName ? MaleFirstName() : string.Empty;
@@ -68,9 +68,9 @@ namespace MockForge.Providers
             };
         }
 
-        public Person FemalePerson(string gender, bool withNobelTitle, bool withTitle, bool withMiddelName, int? age = null)
+        public Person FemalePerson(string gender, bool withNobelTitle, bool withTitle, bool withMiddelName, int? maxAge = null)
         {
-            var calculatedAge = age ?? numberProvider.RandomNumber<int>(18, 120);
+            var calculatedAge = maxAge ?? numberProvider.RandomNumber<int>(18, 120);
             var birthday = dateProvider.PastDate(calculatedAge);
             var title = withTitle ? FemaleTitle() : string.Empty;
             var middleName = withMiddelName ? FemaleFirstName() : string.Empty;
@@ -91,9 +91,9 @@ namespace MockForge.Providers
             };
         }
 
-        public Person OtherGenderPerson(string gender, bool withNobelTitle, bool withTitle, bool withMiddelName, int? age = null)
+        public Person OtherGenderPerson(string gender, bool withNobelTitle, bool withTitle, bool withMiddelName, int? maxAge = null)
         {
-            var calculatedAge = age ?? numberProvider.RandomNumber<int>(18, 120);
+            var calculatedAge = maxAge ?? numberProvider.RandomNumber<int>(18, 120);
             var birthday = dateProvider.PastDate(calculatedAge);
 
             var combinedTitles = IdentityDataStore.MaleTitleData.Concat(IdentityDataStore.FemaleTitleData).ToArray();

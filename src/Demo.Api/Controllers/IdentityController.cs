@@ -10,26 +10,26 @@ namespace Demo.Api.Controllers
     public class IdentityController(IMockForge mockForge) : ControllerBase
     {
         [HttpGet("person")]
-        public ActionResult<Person> GetPerson([FromQuery] bool withNobleTitle = false, [FromQuery] bool withTitle = false, [FromQuery] bool withMiddleName = false, [FromQuery] int? age = null)
+        public ActionResult<Person> GetPerson([FromQuery] bool withNobleTitle = false, [FromQuery] bool withTitle = false, [FromQuery] bool withMiddleName = false, [FromQuery] int? maxAge = null)
         {
             var provider = mockForge.Get<IdentityProvider>();
-            var person = provider.Person(withNobleTitle, withTitle, withMiddleName, age);
+            var person = provider.Person(withNobleTitle, withTitle, withMiddleName, maxAge);
             return Ok(person);
         }
 
         [HttpGet("person/male")]
-        public ActionResult<Person> GetMalePerson([FromQuery] bool withNobleTitle = false, [FromQuery] bool withTitle = false, [FromQuery] bool withMiddleName = false, [FromQuery] int? age = null)
+        public ActionResult<Person> GetMalePerson([FromQuery] bool withNobleTitle = false, [FromQuery] bool withTitle = false, [FromQuery] bool withMiddleName = false, [FromQuery] int? maxAge = null)
         {
             var provider = mockForge.Get<IdentityProvider>();
-            var person = provider.MalePerson("Male", withNobleTitle, withTitle, withMiddleName, age);
+            var person = provider.MalePerson("Male", withNobleTitle, withTitle, withMiddleName, maxAge);
             return Ok(person);
         }
 
         [HttpGet("person/female")]
-        public ActionResult<Person> GetFemalePerson([FromQuery] bool withNobleTitle = false, [FromQuery] bool withTitle = false, [FromQuery] bool withMiddleName = false, [FromQuery] int? age = null)
+        public ActionResult<Person> GetFemalePerson([FromQuery] bool withNobleTitle = false, [FromQuery] bool withTitle = false, [FromQuery] bool withMiddleName = false, [FromQuery] int? maxAge = null)
         {
             var provider = mockForge.Get<IdentityProvider>();
-            var person = provider.FemalePerson("Female", withNobleTitle, withTitle, withMiddleName, age);
+            var person = provider.FemalePerson("Female", withNobleTitle, withTitle, withMiddleName, maxAge);
             return Ok(person);
         }
     }
