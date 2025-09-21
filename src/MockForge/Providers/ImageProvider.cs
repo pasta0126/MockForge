@@ -11,7 +11,6 @@ namespace MockForge.Providers
 
         private static int Clamp(int v, int lo, int hi) => v < lo ? lo : v > hi ? hi : v;
 
-        // Generates a 24-bit BMP image with random color tiles
         public byte[] GenerateRandomBitmap(int width, int height, int tileSize = 32)
         {
             const int bytesPerPixel = 3; // B, G, R
@@ -91,7 +90,6 @@ namespace MockForge.Providers
             return ms.ToArray();
         }
 
-        // Generates a PNG with RGBA pixels, where RGB changes smoothly per tile
         public byte[] GeneratePngRGBNative(int width, int height, int tileSize = 32, int delta = 30)
         {
             var buffer = new (byte B, byte G, byte R)[height, width];
@@ -142,7 +140,6 @@ namespace MockForge.Providers
             return PngEncoder.SavePng(pixelData, width, height);
         }
 
-        // Generates a PNG with RGBA pixels, hue varies per tile in HSV space
         public byte[] GeneratePngHSVNative(int width, int height, int tileSize = 32, float maxHueStep = 15f)
         {
             var buffer = new (byte B, byte G, byte R)[height, width];
