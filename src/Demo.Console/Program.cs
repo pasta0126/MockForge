@@ -15,7 +15,7 @@ Console.WriteLine();
 var identityProvider = forge.Get<IdentityProvider>();
 Person person = identityProvider.Person(withNobelTitle: false, withTitle: false, withMiddelName: false);
 
-Console.WriteLine("Persona:");
+Console.WriteLine("Persona:**");
 
 var jsonOptions = new JsonSerializerOptions
 {
@@ -24,3 +24,7 @@ var jsonOptions = new JsonSerializerOptions
 };
 string personJson = JsonSerializer.Serialize(person, jsonOptions);
 Console.WriteLine(personJson);
+
+var colorProvider = forge.Get<ColorProvider>();
+var hexColor = colorProvider.GetHexColor(person.FullName);
+Console.WriteLine($"Color HEX para '{person.FullName}': {hexColor}");
