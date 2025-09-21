@@ -1,68 +1,31 @@
 # MockForge
 
-A lightweight .NET 8 library to generate fake data with localization support, deterministic seeds, and DI-friendly APIs.
+A lightweight .NET 8 library to generate fake data with zero configuration.
 
 ## Features
-- Locale-aware data via embedded JSON resources (e.g., `en`, `es`) with fallback (requested ? base language ? `en`).
-- Deterministic output by optional seed (great for tests and reproducibility).
-- Simple, composable providers (e.g., `NameProvider`).
-- Works with DI or standalone factory.
 
-## Requirements
-- .NET 8 SDK
+- Answers: Magic 8 Ball, Yes/No, True/False.
+- Identity: fake persons (names, gender, birthday, company, department, city).
+- Deterministic colors from text (HEX, RGB, RGBA).
+- Dates and times: past/future, random, and by age range.
+- Numbers: random integers and decimals.
+- Cards: poker, Spanish deck, UNO, tarot.
+- Optional seed for reproducible results.
+- Works with or without DI.
 
-## Getting Started
+## Install
 
-### Install
-- Add a project reference to the libraries under `src/`, or use the NuGet package if/when published.
+- NuGet: `MockForge` (or add a project reference).
 
-### Usage with DI
+## Quick start
+
 ```csharp
-using Microsoft.Extensions.DependencyInjection;
+using System;
 using MockForge;
-using MockForge.Core;
-using MockForge.Core.Abstractions;
-using MockForge.Providers.Name;
+using MockForge.Providers;
 
-var services = new ServiceCollection()
-    .AddMockForge(o =>
-    {
-        o.Locale = "es";   // or "en", "es-MX", etc.
-        o.Seed = 123;       // optional for deterministic output
-    })
-    .BuildServiceProvider();
+var forge = MockForgeFactory.Create();
 
-var forge = services.GetRequiredService<IMockForge>();
-var fullName = await forge.Get<NameProvider>().FullAsync();
+var answer = forge.Get<AnswerProvider>().Magic8Ball();
+Console.WriteLine($"Magic 8 Ball: {answer}");
 ```
-
-### Usage without DI
-```csharp
-using MockForge;
-using MockForge.Core;
-using MockForge.Providers.Name;
-
-var forge = MockForgeFactory.Create(new MockForgeOptions
-{
-    Locale = "en",
-    Seed = 42
-});
-
-var fullName = await forge.Get<NameProvider>().FullAsync();
-```
-
-## Project Structure
-- `MockForge.Core`: abstractions and core utilities (`IMockForge`, `IRandomizer`, `ILocaleStore`, `ITemplateEngine`, `MockForgeOptions`).
-- `MockForge`: service registration and facade (`AddMockForge`, `MockForgeFactory`).
-- `MockForge.Providers`: concrete providers (e.g., `NameProvider`).
-- `MockForge.Locales`: embedded locale data (`Locales/en.json`, `Locales/es.json`).
-- `MockForge.Tests`: xUnit tests with FluentAssertions.
-
-## Running Tests
-```bash
-dotnet test
-```
-
-## Extending
-- Add new providers under `MockForge.Providers` that implement `IProvider` and accept `(IRandomizer, ILocaleStore, string locale)` in the constructor.
-- Add locale keys to `MockForge.Locales` JSON files and consume them via `ILocaleStore`.

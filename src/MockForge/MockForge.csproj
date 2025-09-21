@@ -18,6 +18,9 @@
 
 		<PackageTags>random;data-generation;dummy-data;test-data;utilities;net8;MockForge</PackageTags>
 		<RepositoryUrl>https://github.com/pasta0126/MockForge</RepositoryUrl>
+		<PackageProjectUrl>https://www.morethanvoid.company/</PackageProjectUrl>
+		<PackageReleaseNotes>Initial release of MockForge (v1.0.0): locale-aware fake data, deterministic seed support, and DI-friendly providers.</PackageReleaseNotes>
+		<Copyright>Copyright © 2025 MicroIsla</Copyright>
 
 		<PackageLicenseExpression>Unlicense</PackageLicenseExpression>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
