@@ -12,6 +12,7 @@
             .Where(s => !string.IsNullOrEmpty(s)));
 
         public required string Gender { get; set; }
+        public required string Species { get; set; }
         public DateOnly Birthday { get; set; }
         public int Age => CalculateAge(Birthday);
 

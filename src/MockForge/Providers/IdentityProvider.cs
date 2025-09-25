@@ -1,6 +1,9 @@
 using MockForge.Core.Abstractions;
 using MockForge.Models;
 using MockForge.StaticData;
+using MockForge.Utilities;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace MockForge.Providers
 {
@@ -13,6 +16,46 @@ namespace MockForge.Providers
 
         public string Gender() => r.Pick(IdentityDataStore.GenderData);
 
+        public string WeightedGender()
+        {
+            var roll = r.NextDouble();
+            if (roll < 0.46) // Male 46%,
+            {
+                return "Male";
+            }
+            if (roll < 0.92) // Female 46%,
+            {
+                return "Female";
+            }
+
+            // 1% each for the 8 remaining
+            var others = IdentityDataStore.GenderData.Where(g => g != "Male" && g != "Female").ToArray();
+            return r.Pick(others);
+        }
+
+        public string Species() => r.Pick(IdentityDataStore.SpeciesData);
+
+        public string GenerateRobotName(string seed, int number, bool keepSeparator = false)
+            => GetCustomName(seed, number, keepSeparator);
+
+        public string GenerateRobotName(bool keepSeparator = false)
+        {
+            var seed = $"{Company()}";
+            var number = numberProvider.RandomNumber<int>(0, 1_000_000);
+            return GetCustomName(seed, number, keepSeparator);
+        }
+
+        private static string GetCustomName(string input, int number, bool keepSeparator)
+        {
+            byte[] hash = MD5.HashData(Encoding.UTF8.GetBytes(input));
+            string md5Full = BitConverter.ToString(hash).Replace("-", "").ToUpperInvariant();
+            string prefix = md5Full[..4];
+
+            string valueB60 = Converters.ToBase60(number, keepSeparator);
+
+            return $"{prefix}-{valueB60}";
+        }
+
         public string MaleFirstName() => r.Pick(IdentityDataStore.MaleNameData);
         public string FemaleFirstName() => r.Pick(IdentityDataStore.FemaleNameData);
 
@@ -24,28 +67,32 @@ namespace MockForge.Providers
         public string MaleNobleTitle() => r.Pick(IdentityDataStore.MaleNobleTitleData);
         public string FemaleNobleTitle() => r.Pick(IdentityDataStore.FemaleNobleTitleData);
 
-        public string City() => r.Pick(IdentityDataStore.CityData);
+        public string City() => r.Pick(IdentityDataStore.NeoCityData);
         public string Department() => r.Pick(IdentityDataStore.DepartmentData);
         public string Company() => r.Pick(IdentityDataStore.CompanyData);
 
         public Person Person(bool withNobelTitle, bool withTitle, bool withMiddelName, int? maxAge = null)
         {
-            var gender = Gender();
+            var species = Species();
+            var gender = species == "Human" ? WeightedGender() : Gender();
 
             if (gender == "Male")
             {
-                return MalePerson(gender, withNobelTitle, withTitle, withMiddelName, maxAge);
+                return MalePerson(gender, species, withNobelTitle, withTitle, withMiddelName, maxAge);
             }
 
             if (gender == "Female")
             {
-                return FemalePerson(gender, withNobelTitle, withTitle, withMiddelName, maxAge);
+                return FemalePerson(gender, species, withNobelTitle, withTitle, withMiddelName, maxAge);
             }
 
-            return OtherGenderPerson(gender, withNobelTitle, withTitle, withMiddelName, maxAge);
+            return OtherGenderPerson(gender, species, withNobelTitle, withTitle, withMiddelName, maxAge);
         }
 
-        public Person MalePerson(string gender, bool withNobelTitle, bool withTitle, bool withMiddelName, int? maxAge = null)
+        public Person OtherGenderPerson(string gender, bool withNobelTitle, bool withTitle, bool withMiddelName, int? maxAge = null)
+            => OtherGenderPerson(gender, Species(), withNobelTitle, withTitle, withMiddelName, maxAge);
+
+        public Person MalePerson(string gender, string species, bool withNobelTitle, bool withTitle, bool withMiddelName, int? maxAge = null)
         {
             var calculatedAge = maxAge ?? numberProvider.RandomNumber<int>(18, 120);
             var birthday = dateProvider.PastDate(calculatedAge);
@@ -61,6 +108,7 @@ namespace MockForge.Providers
                 MiddleName = middleName,
                 LastName = LastName(),
                 Gender = gender,
+                Species = species,
                 Birthday = birthday,
                 City = City(),
                 Company = Company(),
@@ -68,7 +116,7 @@ namespace MockForge.Providers
             };
         }
 
-        public Person FemalePerson(string gender, bool withNobelTitle, bool withTitle, bool withMiddelName, int? maxAge = null)
+        public Person FemalePerson(string gender, string species, bool withNobelTitle, bool withTitle, bool withMiddelName, int? maxAge = null)
         {
             var calculatedAge = maxAge ?? numberProvider.RandomNumber<int>(18, 120);
             var birthday = dateProvider.PastDate(calculatedAge);
@@ -84,6 +132,7 @@ namespace MockForge.Providers
                 MiddleName = middleName,
                 LastName = LastName(),
                 Gender = gender,
+                Species = species,
                 Birthday = birthday,
                 City = City(),
                 Company = Company(),
@@ -91,7 +140,7 @@ namespace MockForge.Providers
             };
         }
 
-        public Person OtherGenderPerson(string gender, bool withNobelTitle, bool withTitle, bool withMiddelName, int? maxAge = null)
+        public Person OtherGenderPerson(string gender, string species, bool withNobelTitle, bool withTitle, bool withMiddelName, int? maxAge = null)
         {
             var calculatedAge = maxAge ?? numberProvider.RandomNumber<int>(18, 120);
             var birthday = dateProvider.PastDate(calculatedAge);
@@ -112,6 +161,7 @@ namespace MockForge.Providers
                 MiddleName = middleName,
                 LastName = LastName(),
                 Gender = gender,
+                Species = species,
                 Birthday = birthday,
                 City = City(),
                 Company = Company(),

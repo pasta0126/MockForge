@@ -21,7 +21,7 @@ namespace Demo.Api.Controllers
         public ActionResult<Person> GetMalePerson([FromQuery] bool withNobleTitle = false, [FromQuery] bool withTitle = false, [FromQuery] bool withMiddleName = false, [FromQuery] int? maxAge = null)
         {
             var provider = mockForge.Get<IdentityProvider>();
-            var person = provider.MalePerson("Male", withNobleTitle, withTitle, withMiddleName, maxAge);
+            var person = provider.MalePerson("Male", "Human", withNobleTitle, withTitle, withMiddleName, maxAge);
             return Ok(person);
         }
 
@@ -29,7 +29,7 @@ namespace Demo.Api.Controllers
         public ActionResult<Person> GetFemalePerson([FromQuery] bool withNobleTitle = false, [FromQuery] bool withTitle = false, [FromQuery] bool withMiddleName = false, [FromQuery] int? maxAge = null)
         {
             var provider = mockForge.Get<IdentityProvider>();
-            var person = provider.FemalePerson("Female", withNobleTitle, withTitle, withMiddleName, maxAge);
+            var person = provider.FemalePerson("Female", "Human", withNobleTitle, withTitle, withMiddleName, maxAge);
             return Ok(person);
         }
     }
