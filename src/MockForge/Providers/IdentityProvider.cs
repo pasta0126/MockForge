@@ -35,17 +35,7 @@ namespace MockForge.Providers
 
         public string Species() => r.Pick(IdentityDataStore.SpeciesData);
 
-        public string GenerateRobotName(string seed, int number, bool keepSeparator = false)
-            => GetCustomName(seed, number, keepSeparator);
-
-        public string GenerateRobotName(bool keepSeparator = false)
-        {
-            var seed = $"{Company()}";
-            var number = numberProvider.RandomNumber<int>(0, 1_000_000);
-            return GetCustomName(seed, number, keepSeparator);
-        }
-
-        private static string GetCustomName(string input, int number, bool keepSeparator)
+        public string GetRobotName(string input, int number, bool keepSeparator)
         {
             byte[] hash = MD5.HashData(Encoding.UTF8.GetBytes(input));
             string md5Full = BitConverter.ToString(hash).Replace("-", "").ToUpperInvariant();
@@ -74,7 +64,18 @@ namespace MockForge.Providers
         public Person Person(bool withNobelTitle, bool withTitle, bool withMiddelName, int? maxAge = null)
         {
             var species = Species();
-            var gender = species == "Human" ? WeightedGender() : Gender();
+            var gender = species is "Human" or "Cyborg" or "Synthetic" ? WeightedGender() : Gender();
+
+            if (species == "Android")
+            {
+                var input = Path.GetRandomFileName().Replace(".", "");
+                return AndroidPerson(gender, species, input, maxAge);
+            }
+
+            if (species == "Extraterrestrial")
+            {
+                return ExtraterrestrialPerson(gender, species, withNobelTitle, maxAge);
+            }
 
             if (gender == "Male")
             {
@@ -131,6 +132,55 @@ namespace MockForge.Providers
                 FirstName = FemaleFirstName(),
                 MiddleName = middleName,
                 LastName = LastName(),
+                Gender = gender,
+                Species = species,
+                Birthday = birthday,
+                City = City(),
+                Company = Company(),
+                Department = Department(),
+            };
+        }
+
+        public Person AndroidPerson(string gender, string species, string input, int? maxAge = null)
+        {
+            var calculatedAge = maxAge ?? numberProvider.RandomNumber<int>(18, 120);
+            var birthday = dateProvider.PastDate(calculatedAge);
+            var num = numberProvider.RandomNumber<int>(0, 3600);
+
+            return new()
+            {
+                NobleTitle = string.Empty,
+                Title = string.Empty,
+                FirstName = GetRobotName(input, num, false),
+                MiddleName = string.Empty,
+                LastName = string.Empty,
+                Gender = gender,
+                Species = species,
+                Birthday = birthday,
+                City = City(),
+                Company = Company(),
+                Department = Department(),
+            };
+        }
+
+        public Person ExtraterrestrialPerson(string gender, string species, bool withNobelTitle, int? maxAge = null)
+        {
+            var calculatedAge = maxAge ?? numberProvider.RandomNumber<int>(18, 120);
+            var birthday = dateProvider.PastDate(calculatedAge);
+
+            var combinedNobleTitles = IdentityDataStore.MaleNobleTitleData.Concat(IdentityDataStore.FemaleNobleTitleData).ToArray();
+            var combinedFirstNames = IdentityDataStore.MaleNameData.Concat(IdentityDataStore.FemaleNameData).ToArray();
+
+            var nobleTitle = withNobelTitle ? r.Pick(combinedNobleTitles) : string.Empty;
+            var firstName = r.Pick(combinedFirstNames);
+
+            return new()
+            {
+                NobleTitle = nobleTitle,
+                Title = string.Empty,
+                FirstName = firstName,
+                MiddleName = string.Empty,
+                LastName = string.Empty,
                 Gender = gender,
                 Species = species,
                 Birthday = birthday,
