@@ -18,9 +18,6 @@
 
         public required string City { get; set; }
 
-        public required string Company { get; set; }
-        public required string Department { get; set; }
-
         private static int CalculateAge(DateOnly birthday)
         {
             var today = DateOnly.FromDateTime(DateTime.Today);

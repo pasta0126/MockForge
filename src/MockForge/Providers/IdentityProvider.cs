@@ -10,6 +10,7 @@ namespace MockForge.Providers
     public sealed class IdentityProvider(
         IRandomizer r,
         DateProvider dateProvider,
+        ProfessionProvider professionProvider,
         NumberProvider numberProvider) : IProvider
     {
         public string Name => "Identity";
@@ -58,8 +59,6 @@ namespace MockForge.Providers
         public string FemaleNobleTitle() => r.Pick(IdentityDataStore.FemaleNobleTitleData);
 
         public string City() => r.Pick(IdentityDataStore.NeoCityData);
-        public string Department() => r.Pick(IdentityDataStore.DepartmentData);
-        public string Company() => r.Pick(IdentityDataStore.CompanyData);
 
         public Person Person(bool withNobelTitle, bool withTitle, bool withMiddelName, int? maxAge = null)
         {
@@ -112,8 +111,6 @@ namespace MockForge.Providers
                 Species = species,
                 Birthday = birthday,
                 City = City(),
-                Company = Company(),
-                Department = Department(),
             };
         }
 
@@ -136,8 +133,6 @@ namespace MockForge.Providers
                 Species = species,
                 Birthday = birthday,
                 City = City(),
-                Company = Company(),
-                Department = Department(),
             };
         }
 
@@ -158,8 +153,6 @@ namespace MockForge.Providers
                 Species = species,
                 Birthday = birthday,
                 City = City(),
-                Company = Company(),
-                Department = Department(),
             };
         }
 
@@ -185,8 +178,6 @@ namespace MockForge.Providers
                 Species = species,
                 Birthday = birthday,
                 City = City(),
-                Company = Company(),
-                Department = Department(),
             };
         }
 
@@ -214,8 +205,6 @@ namespace MockForge.Providers
                 Species = species,
                 Birthday = birthday,
                 City = City(),
-                Company = Company(),
-                Department = Department(),
             };
         }
     }
