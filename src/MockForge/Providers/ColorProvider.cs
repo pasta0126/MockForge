@@ -1,6 +1,7 @@
 using System.Security.Cryptography;
 using System.Text;
 using MockForge.Core.Abstractions;
+using MockForge.StaticData;
 
 namespace MockForge.Providers
 {
@@ -30,6 +31,11 @@ namespace MockForge.Providers
                 return $"rgba(0, 0, 0, {alpha})";
             var hash = SHA256.HashData(Encoding.UTF8.GetBytes(input));
             return $"rgba({hash[0]}, {hash[1]}, {hash[2]}, {alpha})";
+        }
+
+        public string GetColorName()
+        {
+            return r.Pick(ColorDataStore.BasicColorNames);
         }
     }
 }
