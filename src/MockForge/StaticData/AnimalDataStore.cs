@@ -64,7 +64,9 @@ public static class AnimalDataStore
         "Jackalope",
         "Banshee",
         "Troll",
-        "Ogre"
+        "Ogre",
+        "Orb",
+        "Willow-the-Wisp"
     ];
 
     public static readonly string[] Animals = [.. RealAnimals, ..MythicalAnimals];
