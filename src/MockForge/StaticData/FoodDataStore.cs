@@ -40,7 +40,7 @@ public static class FoodDataStore
         "Onion",
         "Garlic",
         "Potato",
-        "Sweet Potato",
+        "SweetPotato",
         "Cauliflower",
         "Cabbage",
         "Kale",
@@ -88,11 +88,11 @@ public static class FoodDataStore
     [
         "Lentils",
         "Chickpeas",
-        "Black Beans",
-        "Kidney Beans",
+        "BlackBeans",
+        "KidneyBeans",
         "Soybeans",
-        "Pinto Beans",
-        "Green Bean",
+        "PintoBeans",
+        "GreenBean",
         "Pea",
         "Peanuts"
     ];
@@ -103,11 +103,11 @@ public static class FoodDataStore
         "Walnuts",
         "Cashews",
         "Pistachios",
-        "Sunflower Seeds",
-        "Pumpkin Seeds",
-        "Chia Seeds",
+        "SunflowerSeeds",
+        "PumpkinSeeds",
+        "ChiaSeeds",
         "Flaxseeds",
-        "Sesame Seeds"
+        "SesameSeeds"
     ];
 
     public static readonly string[] AllFoods = [.. Fruits, .. Vegetables, .. Grains, .. Proteins, .. Dairy, .. Legumes, .. NutsAndSeeds];
