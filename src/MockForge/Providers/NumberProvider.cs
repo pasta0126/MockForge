@@ -35,5 +35,35 @@ namespace MockForge.Providers
 
             return (T)Convert.ChangeType(randomDouble, typeof(T));
         }
+
+        public string RandomPaddedNumber(int length, int maxInclusive)
+        {
+            if (length <= 0)
+                return string.Empty;
+
+            if (maxInclusive < 0)
+                maxInclusive = 0;
+
+            int value;
+
+            if (maxInclusive == int.MaxValue)
+            {
+                value = r.Next(0, int.MaxValue);
+            }
+            else
+            {
+                var exclusiveMax = maxInclusive + 1;
+                if (exclusiveMax <= 0) 
+                    exclusiveMax = int.MaxValue;
+
+                value = r.Next(0, exclusiveMax);
+            }
+
+            var s = value.ToString();
+            if (s.Length >= length)
+                return s; 
+
+            return s.PadLeft(length, '0');
+        }
     }
 }
