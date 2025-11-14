@@ -1,5 +1,7 @@
-using System.IO.Compression;
 using MockForge.Core.Abstractions;
+using System.IO.Compression;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace MockForge.Providers
 {
@@ -207,6 +209,312 @@ namespace MockForge.Providers
                 g: (byte)MathF.Round((gp + m) * 255f),
                 b: (byte)MathF.Round((bp + m) * 255f)
             );
+        }
+
+        public byte[] GenerateAvatarPng(string seed, int logicalSize = 8, int scale = 8)
+        {
+            var hash = SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(seed));
+            int size = logicalSize;
+            int half = size / 2;
+            var region = new byte[size, half];
+            int[] leftBound = new int[size];
+            int[] rightBound = new int[size];
+
+            for (int y = 0; y < size; y++)
+            {
+                leftBound[y] = half;
+                rightBound[y] = -1;
+            }
+
+            int idx = 0;
+
+            byte NextByte()
+            {
+                if (idx >= hash.Length) idx = 0;
+                return hash[idx++];
+            }
+
+            int NextInt(int max) => max <= 0 ? 0 : NextByte() % max;
+
+            double NextUniform()
+            {
+                int v = (NextByte() << 8) | NextByte();
+                return v / 65535.0;
+            }
+
+            double NextGaussian(double mean, double std)
+            {
+                double u1 = NextUniform();
+                if (u1 <= 0.0) u1 = 1e-6;
+                double u2 = NextUniform();
+                double r = Math.Sqrt(-2.0 * Math.Log(u1));
+                double theta = 2.0 * Math.PI * u2;
+                double z = r * Math.Cos(theta);
+                return mean + std * z;
+            }
+
+            float baseHue = (hash[0] / 255f) * 360f;
+            float secondaryHue = (baseHue + ((hash[1] & 1) == 0 ? -25f : 25f) + 360f) % 360f;
+            float accentHue = (baseHue + 180f) % 360f;
+
+            var (pr, pg, pb) = HsvToRgb(baseHue, 0.8f, 0.9f);
+            var (sr, sg, sb) = HsvToRgb(secondaryHue, 0.75f, 0.85f);
+            var (ar, ag, ab) = HsvToRgb(accentHue, 0.9f, 0.95f);
+
+            var primary = (B: pb, G: pg, R: pr);
+            var secondary = (B: sb, G: sg, R: sr);
+            var accent = (B: ab, G: ag, R: ar);
+
+            int remaining = size;
+            int headH = Clamp((int)Math.Round(NextGaussian(size * 0.3, size * 0.08)), 2, size - 4);
+            remaining -= headH;
+            int bodyH = Clamp((int)Math.Round(NextGaussian(size * 0.4, size * 0.10)), 2, remaining - 2);
+            remaining -= bodyH;
+            int legsH = remaining;
+            if (legsH < 1) legsH = 1;
+
+            int bodyStart = headH;
+            int legsStart = headH + bodyH;
+
+            int centerCol = half - 1;
+
+            float headWidthBase = half * (float)Math.Clamp(NextGaussian(0.5, 0.15), 0.2, 0.9);
+            float bodyWidthBase = half * (float)Math.Clamp(NextGaussian(0.8, 0.15), 0.4, 1.1);
+            float legsWidthBase = half * (float)Math.Clamp(NextGaussian(0.45, 0.12), 0.2, 0.8);
+
+            int legsMode = NextInt(3); // 0 = dos piernas, 1 = falda/bloque, 2 = flotante
+
+            void Mark(int y, int x, byte val)
+            {
+                if (x < 0 || x >= half || y < 0 || y >= size) return;
+                region[y, x] = val;
+                if (x < leftBound[y]) leftBound[y] = x;
+                if (x > rightBound[y]) rightBound[y] = x;
+            }
+
+            float width = headWidthBase;
+
+            for (int y = 0; y < headH; y++)
+            {
+                float t = headH > 1 ? (float)y / (headH - 1) : 0f;
+                float bulge = 1f - MathF.Abs(2f * t - 1f);
+
+                width = width * (0.8f + 0.3f * bulge);
+                width += (float)NextGaussian(0, 0.3f);
+
+                if (width < 0.5f) width = 0.5f;
+                if (width > half - 0.2f) width = half - 0.2f;
+
+                int span = Clamp((int)MathF.Round(width), 1, half);
+                int left = centerCol - span / 2;
+
+                for (int x = 0; x < span; x++)
+                    Mark(y, left + x, 1);
+            }
+
+            int shouldersRows = Math.Max(1, bodyH / 3);
+            float bodyWidth = bodyWidthBase;
+
+            for (int i = 0; i < shouldersRows; i++)
+            {
+                int row = bodyStart + i;
+                float stretch = 1.1f + (float)NextGaussian(0, 0.1f);
+                float rowWidth = bodyWidth * stretch;
+
+                if (rowWidth < 1f) rowWidth = 1f;
+                if (rowWidth > half - 0.2f) rowWidth = half - 0.2f;
+
+                int span = Clamp((int)MathF.Round(rowWidth), 2, half);
+                int left = centerCol - span / 2;
+
+                for (int x = 0; x < span; x++)
+                    Mark(row, left + x, 1);
+
+                int armLen = 1 + NextInt(2);
+
+                for (int d = 1; d <= armLen; d++)
+                {
+                    Mark(row, left - d, 1);
+                    Mark(row, left + span - 1 + d, 1);
+                }
+            }
+
+            int bodyCoreStart = bodyStart + shouldersRows;
+
+            for (int y = bodyCoreStart; y < bodyStart + bodyH; y++)
+            {
+                float t = bodyH > 1 ? (float)(y - bodyStart) / (bodyH - 1) : 0f;
+                float waistFactor = 1f - 0.4f * MathF.Abs(2f * t - 1f);
+                float targetWidth = bodyWidthBase * waistFactor;
+
+                bodyWidth = bodyWidth * 0.6f + targetWidth * 0.4f;
+                bodyWidth += (float)NextGaussian(0, 0.25f);
+
+                if (bodyWidth < 1f) bodyWidth = 1f;
+                if (bodyWidth > half - 0.2f) bodyWidth = half - 0.2f;
+
+                int span = Clamp((int)MathF.Round(bodyWidth), 2, half);
+                int left = centerCol - span / 2;
+
+                for (int x = 0; x < span; x++)
+                    Mark(y, left + x, 1);
+            }
+
+            if (legsMode == 0)
+            {
+                int legWidth = 1 + NextInt(2);
+                int legGap = 1 + NextInt(2);
+                int totalSpan = legWidth * 2 + legGap;
+                int legLeft = centerCol - totalSpan / 2;
+
+                if (legLeft < 0) legLeft = 0;
+                if (legLeft + totalSpan > half) legLeft = half - totalSpan;
+
+                int legRightStart = legLeft + legWidth + legGap;
+
+                for (int y = 0; y < legsH; y++)
+                {
+                    int row = legsStart + y;
+
+                    if (NextInt(5) == 0) continue;
+
+                    for (int dx = 0; dx < legWidth; dx++)
+                    {
+                        Mark(row, legLeft + dx, 1);
+                        Mark(row, legRightStart + dx, 1);
+                    }
+                }
+            }
+            else if (legsMode == 1)
+            {
+                float legWidth = legsWidthBase;
+
+                for (int y = 0; y < legsH; y++)
+                {
+                    int row = legsStart + y;
+                    float t = legsH > 1 ? (float)y / (legsH - 1) : 0f;
+
+                    legWidth = legWidth * 0.6f + legsWidthBase * (0.9f - 0.4f * t) * 0.4f;
+                    legWidth += (float)NextGaussian(0, 0.2f);
+
+                    if (legWidth < 1f) legWidth = 1f;
+                    if (legWidth > half - 0.2f) legWidth = half - 0.2f;
+
+                    int span = Clamp((int)MathF.Round(legWidth), 1, half);
+                    int left = centerCol - span / 2;
+
+                    if (NextInt(6) == 0) continue;
+
+                    for (int x = 0; x < span; x++)
+                        Mark(row, left + x, 1);
+                }
+            }
+
+            for (int y = 0; y < size; y++)
+            {
+                if (leftBound[y] > rightBound[y]) continue;
+
+                for (int x = leftBound[y]; x <= rightBound[y]; x++)
+                {
+                    if (region[y, x] == 0) continue;
+
+                    if (NextInt(12) == 0)
+                        region[y, x] = 0;
+                }
+            }
+
+            for (int y = bodyStart; y < bodyStart + bodyH; y++)
+            {
+                if (leftBound[y] > rightBound[y]) continue;
+
+                int mid = centerCol;
+
+                if (mid >= leftBound[y] && mid <= rightBound[y] && region[y, mid] == 1)
+                    region[y, mid] = 2;
+            }
+
+            if (headH > 1)
+            {
+                int eyesRow = Clamp(1 + NextInt(headH - 1), 1, headH - 1);
+                int eyeOffset = 1 + NextInt(Math.Max(1, half - 2));
+                int leftEyeX = centerCol - eyeOffset;
+                int rightEyeX = centerCol + eyeOffset >= half ? half - 1 : centerCol + eyeOffset;
+
+                if (leftEyeX >= 0 && leftEyeX < half && region[eyesRow, leftEyeX] != 0)
+                    region[eyesRow, leftEyeX] = 3;
+
+                if (rightEyeX >= 0 && rightEyeX < half && region[eyesRow, rightEyeX] != 0)
+                    region[eyesRow, rightEyeX] = 3;
+            }
+
+            int beltRow = bodyStart + bodyH / 2;
+
+            if (beltRow >= bodyStart && beltRow < bodyStart + bodyH)
+            {
+                for (int x = 0; x < half; x++)
+                {
+                    if (region[beltRow, x] != 0 && NextInt(3) == 0)
+                        region[beltRow, x] = 3;
+                }
+            }
+
+            for (int row = size - 1; row >= legsStart; row--)
+            {
+                bool any = false;
+
+                for (int x = 0; x < half; x++)
+                {
+                    if (region[row, x] == 1)
+                    {
+                        any = true;
+                        region[row, x] = 3;
+                    }
+                }
+
+                if (any) break;
+            }
+
+            var buffer = new (byte B, byte G, byte R)[size, size];
+
+            for (int y = 0; y < size; y++)
+            {
+                for (int x = 0; x < half; x++)
+                {
+                    (byte B, byte G, byte R) c = region[y, x] switch
+                    {
+                        1 => primary,
+                        2 => secondary,
+                        3 => accent,
+                        _ => (0, 0, 0)
+                    };
+
+                    buffer[y, x] = c;
+                    buffer[y, size - 1 - x] = c;
+                }
+            }
+
+            int widthPx = size * scale;
+            int heightPx = size * scale;
+            byte[] pixelData = new byte[widthPx * heightPx * 4];
+            int p = 0;
+
+            for (int yy = 0; yy < heightPx; yy++)
+            {
+                int sy = yy / scale;
+
+                for (int xx = 0; xx < widthPx; xx++)
+                {
+                    int sx = xx / scale;
+                    var (B, G, R) = buffer[sy, sx];
+
+                    pixelData[p++] = R;
+                    pixelData[p++] = G;
+                    pixelData[p++] = B;
+                    pixelData[p++] = 255;
+                }
+            }
+
+            return PngEncoder.SavePng(pixelData, widthPx, heightPx);
         }
 
         private static class PngEncoder
