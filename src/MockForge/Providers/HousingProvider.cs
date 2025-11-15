@@ -10,14 +10,12 @@ public sealed class HousingProvider(IRandomizer r, FoodProvider food, PlantProvi
 
     public ApartmentDefinition Generate(int minFloor, int maxFloor)
     {
-        // normalize
         if (minFloor > maxFloor) (minFloor, maxFloor) = (maxFloor, minFloor);
 
         var floor = r.Next(minFloor, maxFloor + 1);
 
         var uid = Guid.NewGuid().ToString();
 
-        // zone: Alta -> fruits (FoodProvider.Fruit), Economica -> flowers (PlantProvider.Flower)
         var zone = floor switch
         {
             <= 30 => "C",
@@ -27,9 +25,9 @@ public sealed class HousingProvider(IRandomizer r, FoodProvider food, PlantProvi
             _ => "AT"
         };
 
-        var zoneName = floor <= 60 ? "Economica" : "Alta"; // user wanted: zona alta are fruits, zona economica uses plant provider for flowers
+        var zoneName = floor <= 60 ? "Underprivileged" : "Affluent";
 
-        var neighborhood = zoneName == "Alta" ? food.Fruit() : plant.Flower();
+        var neighborhood = zoneName == "Affluent" ? food.Fruit() : plant.Flower();
 
         var floorsPerLanding = zone switch
         {
@@ -42,8 +40,8 @@ public sealed class HousingProvider(IRandomizer r, FoodProvider food, PlantProvi
 
         var bedrooms = zone switch
         {
-            "C" => 0,
-            "B" => r.Next(1, 3),
+            "C" => r.Next(0, 1),
+            "B" => r.Next(0, 3),
             "A" => r.Next(2, 4),
             "L" => r.Next(3, 6),
             _ => r.Next(2, 5)
@@ -53,14 +51,13 @@ public sealed class HousingProvider(IRandomizer r, FoodProvider food, PlantProvi
 
         var size = zone switch
         {
-            "C" => r.Next(10, 30),
-            "B" => r.Next(30, 60),
-            "A" => r.Next(60, 90),
-            "L" => r.Next(90, 110),
-            _ => r.Next(110, 120)
+            "C" => r.Next(10, 45),
+            "B" => r.Next(30, 70),
+            "A" => r.Next(60, 100),
+            "L" => r.Next(90, 120),
+            _ => r.Next(150, 250)
         };
 
-        // select short phrase pool and count
         var (pool, count) = zone switch
         {
             "C" => (HousingDataStore.ApartmentCShortPhrases, 4),
@@ -76,20 +73,19 @@ public sealed class HousingProvider(IRandomizer r, FoodProvider food, PlantProvi
         {
             var p = r.Pick<string>(pool);
             if (selected.Add(p)) phrases.Add(p);
-            else i--; // retry to ensure unique phrases
+            else i--; 
         }
 
-        // core description parts
         var details = new List<string>
         {
             string.Join(", ", phrases),
             zone switch
             {
-                "C" => "Category C: minimal ventilation, no natural light, often subterranean.",
-                "B" => "Category B: small, limited light and ventilation.",
-                "A" => "Category A: medium size, some scenic views, moderate ventilation.",
-                "L" => "Category L: large and spacious, premium features.",
-                _ => "AT: top-tier penthouse-like residence, exclusive amenities."
+                "C" => "Category C: Minimal ventilation, no natural light, often subterranean.",
+                "B" => "Category B: Small, limited light and ventilation.",
+                "A" => "Category A: Medium size, some scenic views, moderate ventilation.",
+                "L" => "Category L: Large and spacious, premium features.",
+                _ => "AT: Top-tier penthouse-like residence, exclusive amenities."
             },
             $"Neighborhood: {neighborhood} (Zone: {zoneName})",
             $"Floors per landing: {floorsPerLanding}, Parking: {hasParking}",
