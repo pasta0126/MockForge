@@ -1,7 +1,6 @@
 using MockForge.Core.Abstractions;
 using System.IO.Compression;
 using System.Security.Cryptography;
-using System.Text;
 
 namespace MockForge.Providers
 {
