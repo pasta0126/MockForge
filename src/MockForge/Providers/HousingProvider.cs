@@ -115,7 +115,7 @@ public sealed class HousingProvider(IRandomizer r, FoodProvider food, PlantProvi
         return def;
     }
 
-    private (int rentalPrice, int purchasePrice) CalculatePrices(int floor, int size, string zone, int bathrooms, int bedrooms)
+    private static (int rentalPrice, int purchasePrice) CalculatePrices(int floor, int size, string zone, int bathrooms, int bedrooms)
     {
         var basePricePerSqm = zone switch
         {
