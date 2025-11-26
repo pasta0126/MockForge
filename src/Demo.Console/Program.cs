@@ -28,3 +28,12 @@ Console.WriteLine(personJson);
 var colorProvider = forge.Get<ColorProvider>();
 var hexColor = colorProvider.GetHexColor(person.FullName);
 Console.WriteLine($"Color HEX para '{person.FullName}': {hexColor}");
+
+Console.WriteLine();
+Console.WriteLine("Apartamento:**");
+
+var housingProvider = forge.Get<HousingProvider>();
+ApartmentDefinition apartment = housingProvider.Generate(1, 120);
+
+string apartmentJson = JsonSerializer.Serialize(apartment, jsonOptions);
+Console.WriteLine(apartmentJson);

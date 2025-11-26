@@ -26,16 +26,7 @@ public sealed class HousingProvider(IRandomizer r, FoodProvider food, PlantProvi
         };
 
         var zoneName = floor <= 60 ? "Underprivileged" : "Affluent";
-
         var neighborhood = zoneName == "Affluent" ? food.Fruit() : plant.Flower();
-
-        var floorsPerLanding = zone switch
-        {
-            "L" => 4,
-            "AT" => 1,
-            _ => 2
-        };
-
         var hasParking = zone is "L" or "AT";
 
         var bedrooms = zone switch
@@ -44,10 +35,19 @@ public sealed class HousingProvider(IRandomizer r, FoodProvider food, PlantProvi
             "B" => r.Next(0, 3),
             "A" => r.Next(2, 4),
             "L" => r.Next(3, 6),
+            "AT" => r.Next(4, 8),
             _ => r.Next(2, 5)
         };
 
-        var bathrooms = Math.Max(1, bedrooms / 2);
+        var bathrooms = zone switch
+        {
+            "C" => 0,
+            "B" => 1,
+            "A" => r.Next(1, 2),
+            "L" => 2,
+            "AT" => r.Next(2, 4),
+            _ => 1
+        };
 
         var size = zone switch
         {
@@ -64,35 +64,38 @@ public sealed class HousingProvider(IRandomizer r, FoodProvider food, PlantProvi
             "B" => (HousingDataStore.ApartmentBShortPhrases, 5),
             "A" => (HousingDataStore.ApartmentAShortPhrases, 6),
             "L" => (HousingDataStore.ApartmentLShortPhrases, 8),
-            _ => (HousingDataStore.ApartmentATShortPhrases, 10)
+            "AT" => (HousingDataStore.ApartmentLShortPhrases, 10),
+            _ => (HousingDataStore.ApartmentATShortPhrases, 3)
         };
 
         var selected = new HashSet<string>();
         var phrases = new List<string>();
+
         for (int i = 0; i < count; i++)
         {
             var p = r.Pick<string>(pool);
             if (selected.Add(p)) phrases.Add(p);
-            else i--; 
+            else i--;
         }
 
         var details = new List<string>
         {
-            string.Join(", ", phrases),
             zone switch
             {
-                "C" => "Category C: Minimal ventilation, no natural light, often subterranean.",
-                "B" => "Category B: Small, limited light and ventilation.",
-                "A" => "Category A: Medium size, some scenic views, moderate ventilation.",
-                "L" => "Category L: Large and spacious, premium features.",
-                _ => "AT: Top-tier penthouse-like residence, exclusive amenities."
+                "C" => "Minimal Ventilation, No Natural Light, Maybe Subterranean",
+                "B" => "Small, Limited Light And Ventilation",
+                "A" => "Medium Size, Some Scenic Views, Moderate Ventilation",
+                "L" => "Large And Spacious, Premium Features",
+                "AT" => "Top-Tier Penthouse-Like Residence, Exclusive Amenities",
+                _ => "Standard Apartment With Average Features"
             },
-            $"Neighborhood: {neighborhood} (Zone: {zoneName})",
-            $"Floors per landing: {floorsPerLanding}, Parking: {hasParking}",
-            $"Bedrooms: {bedrooms}, Bathrooms: {bathrooms}, Size: {size}sqm"
+
+            string.Join(". ", phrases.Select(p => char.ToUpper(p[0]) + p[1..]))
         };
 
-        var description = string.Join(" ", details);
+        var description = string.Join(". ", details) + ".";
+
+        var (rentalPrice, purchasePrice) = CalculatePrices(floor, size, zone, bathrooms, bedrooms);
 
         var def = new ApartmentDefinition
         {
@@ -100,14 +103,49 @@ public sealed class HousingProvider(IRandomizer r, FoodProvider food, PlantProvi
             Neighborhood = neighborhood,
             Zone = zoneName,
             Category = zone,
-            FloorsPerLanding = floorsPerLanding,
             HasParking = hasParking,
             Bedrooms = bedrooms,
             Bathrooms = bathrooms,
-            Size = size,
-            Description = description
+            SqmSize = size,
+            Description = description,
+            RentalPrice = rentalPrice,
+            PurchasePrice = purchasePrice
         };
 
         return def;
     }
+
+    private (int rentalPrice, int purchasePrice) CalculatePrices(int floor, int size, string zone, int bathrooms, int bedrooms)
+    {
+        var basePricePerSqm = zone switch
+        {
+            "C" => 500,
+            "B" => 1200,
+            "A" => 2500,
+            "L" => 4500,
+            "AT" => 8000,
+            _ => 1000
+        };
+
+        var floorMultiplier = 1.0 + (floor * 0.01);
+
+        var bathroomBonus = bathrooms * 5000;
+
+        var bedroomBonus = bedrooms * 8000;
+
+        var purchasePrice = (int)((basePricePerSqm * size * floorMultiplier) + bathroomBonus + bedroomBonus);
+
+        var rentalPrice = (int)(purchasePrice * 0.005);
+
+        return (rentalPrice, purchasePrice);
+    }
+
+    public ApartmentDefinition GenerateUnderprivilegedApartment() => Generate(1, 60);
+    public ApartmentDefinition GenerateAffluentApartment() => Generate(61, 120);
+
+    public ApartmentDefinition GenerateCategoryAApartment() => Generate(1, 30);
+    public ApartmentDefinition GenerateCategoryBApartment() => Generate(31, 60);
+    public ApartmentDefinition GenerateCategoryCApartment() => Generate(61, 90);
+    public ApartmentDefinition GenerateCategoryLApartment() => Generate(91, 110);
+    public ApartmentDefinition GenerateCategoryATApartment() => Generate(111, 120);
 }
