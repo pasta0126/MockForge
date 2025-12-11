@@ -13,4 +13,21 @@ public sealed class ThreadSafeRandomizer(int? seed = null) : IRandomizer
             throw new ArgumentException("Empty list for random pick.", nameof(items));
         return _rnd.Value!.Next(items.Count) is var i ? items[i] : items[0];
     }
+
+    public T[] Shuffle<T>(T[]? array)
+    {
+        if (array == null || array.Length <= 1)
+            return array ?? Array.Empty<T>();
+
+        var result = (T[])array.Clone();
+        for (int i = result.Length - 1; i > 0; i--)
+        {
+            var j = Next(0, i + 1);
+            if (j != i)
+            {
+                (result[i], result[j]) = (result[j], result[i]);
+            }
+        }
+        return result;
+    }
 }

@@ -13,6 +13,8 @@ namespace MockForge.Providers
 
         public string PokerCard() => $"{PokerCardRank()} of {PokerCardSuit()}";
 
+        public string[] PokerShuffledDeck() => r.Shuffle(CardDataStore.PokerFullDeck);
+
         public string SpanishCardRank() => r.Pick(CardDataStore.SpanishCardsRanks);
 
         public string SpanishCardSuit() => r.Pick(CardDataStore.SpanishCardsSuits);

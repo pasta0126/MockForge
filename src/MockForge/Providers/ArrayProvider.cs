@@ -6,12 +6,14 @@ namespace MockForge.Providers
     {
         public string Name => "Array";
 
-        public T? Pick<T>(T[]? array)
+        public T Pick<T>(T[] array)
         {
-            if (array == null || array.Length == 0)
-                return default;
-            
             return r.Pick(array);
+        }
+
+        public T[] Shuffle<T>(T[]? array)
+        {
+            return r.Shuffle(array);
         }
     }
 }
