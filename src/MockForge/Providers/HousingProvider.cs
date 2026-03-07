@@ -143,9 +143,9 @@ public sealed class HousingProvider(IRandomizer r, FoodProvider food, PlantProvi
     public ApartmentDefinition GenerateUnderprivilegedApartment() => Generate(1, 60);
     public ApartmentDefinition GenerateAffluentApartment() => Generate(61, 120);
 
-    public ApartmentDefinition GenerateCategoryAApartment() => Generate(1, 30);
+    public ApartmentDefinition GenerateCategoryCApartment() => Generate(1, 30);
     public ApartmentDefinition GenerateCategoryBApartment() => Generate(31, 60);
-    public ApartmentDefinition GenerateCategoryCApartment() => Generate(61, 90);
+    public ApartmentDefinition GenerateCategoryAApartment() => Generate(61, 90);
     public ApartmentDefinition GenerateCategoryLApartment() => Generate(91, 110);
     public ApartmentDefinition GenerateCategoryATApartment() => Generate(111, 120);
 }
