@@ -21,9 +21,13 @@ public sealed class RarityProvider(IRandomizer r) : IProvider
         (ItemRarity.Divine, 1, 800_000)
     ];
 
-    public RarityResult GetRarity(double luckModifier = 0.0)
+    public RarityResult GetRarity(double luckModifier = 0.0, ItemRarity? minRarity = null)
     {
-        var totalDifficulty = RarityData.Sum(x => x.Difficulty);
+        var filteredData = minRarity.HasValue 
+            ? RarityData.Where(x => x.Rarity >= minRarity.Value).ToArray()
+            : RarityData;
+
+        var totalDifficulty = filteredData.Sum(x => x.Difficulty);
         var randomValue = r.Next(1, totalDifficulty + 1);
         
         if (luckModifier > 0)
@@ -33,7 +37,7 @@ public sealed class RarityProvider(IRandomizer r) : IProvider
         }
         
         var cumulativeWeight = 0;
-        foreach (var (rarity, difficulty, basePrice) in RarityData)
+        foreach (var (rarity, difficulty, basePrice) in filteredData)
         {
             cumulativeWeight += difficulty;
             if (randomValue <= cumulativeWeight)
@@ -41,19 +45,25 @@ public sealed class RarityProvider(IRandomizer r) : IProvider
                 return new RarityResult
                 {
                     Rarity = rarity.ToString(),
+                    RarityLevel = (int)rarity,
                     BasePrice = basePrice
                 };
             }
         }
 
+        var fallbackRarity = minRarity ?? ItemRarity.Common;
+        var fallbackData = RarityData.First(x => x.Rarity == fallbackRarity);
         return new RarityResult
         {
-            Rarity = ItemRarity.Common.ToString(),
-            BasePrice = 1
+            Rarity = fallbackRarity.ToString(),
+            RarityLevel = (int)fallbackRarity,
+            BasePrice = fallbackData.BasePrice
         };
     }
 
-    public string GetRarityName(double luckModifier = 0.0) => GetRarity(luckModifier).Rarity;
+    public string GetRarityName(double luckModifier = 0.0, ItemRarity? minRarity = null) 
+        => GetRarity(luckModifier, minRarity).Rarity;
     
-    public int GetRarityPrice(double luckModifier = 0.0) => GetRarity(luckModifier).BasePrice;
+    public int GetRarityPrice(double luckModifier = 0.0, ItemRarity? minRarity = null) 
+        => GetRarity(luckModifier, minRarity).BasePrice;
 }

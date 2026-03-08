@@ -2,7 +2,8 @@ namespace MockForge.Models;
 
 public class Animal
 {
-    public required string Name { get; set; }
+    public required string Breed { get; set; }
+    public required string Rarity { get; set; }
     public int Price { get; set; } = 0;
     public int Intelligence { get; set; } = 0;
     public int Vitality { get; set; } = 0;

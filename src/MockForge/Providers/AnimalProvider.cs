@@ -4,7 +4,7 @@ using MockForge.StaticData;
 
 namespace MockForge.Providers;
 
-public sealed class AnimalProvider(IRandomizer r) : IProvider
+public sealed class AnimalProvider(IRandomizer r, RarityProvider rarityProvider) : IProvider
 {
     public string Name => "Animal";
 
@@ -28,10 +28,16 @@ public sealed class AnimalProvider(IRandomizer r) : IProvider
 
     public Animal CreateRealAnimal()
     {
+        var rarityResult = rarityProvider.GetRarity(luckModifier: 0.0);
+        
+        var minPrice = 1000 * rarityResult.RarityLevel + rarityResult.BasePrice;
+        var maxPrice = 5000 * rarityResult.RarityLevel + rarityResult.BasePrice;
+        
         var animal = new Animal
         {
-            Name = Real(),
-            Price = RealPrice()
+            Breed = Real(),
+            Rarity = rarityResult.Rarity,
+            Price = r.Next(minPrice, maxPrice)
         };
 
         AssignRandomProperties(animal, r.Next(1, 3));
@@ -40,10 +46,16 @@ public sealed class AnimalProvider(IRandomizer r) : IProvider
 
     public Animal CreateMythicalAnimal()
     {
+        var rarityResult = rarityProvider.GetRarity(luckModifier: 1.5, minRarity: ItemRarity.Rare);
+        
+        var minPrice = 10000 * rarityResult.RarityLevel + rarityResult.BasePrice;
+        var maxPrice = 50000 * rarityResult.RarityLevel + rarityResult.BasePrice;
+        
         var animal = new Animal
         {
-            Name = Mythical(),
-            Price = MythicalPrice()
+            Breed = Mythical(),
+            Rarity = rarityResult.Rarity,
+            Price = r.Next(minPrice, maxPrice)
         };
 
         AssignRandomProperties(animal, r.Next(2, 4));
